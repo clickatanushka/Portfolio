@@ -185,44 +185,22 @@
   .project-link:hover{color:var(--accent);}
   .project-year{font-family:var(--font-mono);font-size:.7rem;color:var(--border);}
 
-  /* CERTIFICATES CAROUSEL */
+  /* CERTIFICATES */
   #certificates{border-top:1px solid var(--border);}
-  .cert-carousel-wrap{margin-top:3.5rem;position:relative;}
-  .cert-track-outer{overflow:hidden;border:1px solid var(--border);border-radius:3px;width:100%;}
-  .cert-track{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform;min-height:120px;}
-  .cert-card{
-    min-width:340px; flex-shrink:0;
-    background:var(--surface);border-right:1px solid var(--border);
-    padding:2.2rem 2rem;display:flex;gap:1.4rem;align-items:flex-start;
-    position:relative;overflow:hidden;
-    transition:background .25s;
-    user-select:none;
-  }
-  .cert-card:last-child{border-right:none;}
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:1.2rem;margin-top:3.5rem;}
+  .cert-card{background:var(--surface);border:1px solid var(--border);
+    border-radius:3px;padding:1.8rem;display:flex;gap:1.4rem;align-items:flex-start;
+    transition:border-color .25s,transform .25s;position:relative;overflow:hidden;}
   .cert-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:0;
-    background:var(--accent);transition:height .35s;}
-  .cert-card.active::after{height:100%;}
-  .cert-card.active{background:#131313;}
+    background:var(--accent);transition:height .3s;}
+  .cert-card:hover{border-color:#2e2e2e;transform:translateX(4px);}
+  .cert-card:hover::after{height:100%;}
   .cert-icon{font-size:1.8rem;flex-shrink:0;background:var(--bg);border:1px solid var(--border);
     width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:3px;}
-  .cert-name{font-family:var(--font-display);font-size:1.3rem;letter-spacing:.04em;line-height:1.1;margin-bottom:.35rem;}
+  .cert-name{font-family:var(--font-display);font-size:1.2rem;letter-spacing:.04em;line-height:1.1;margin-bottom:.3rem;}
   .cert-issuer{font-family:var(--font-mono);font-size:.72rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.5rem;}
   .cert-date{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.08em;}
-
-  /* Nav row: arrows + dots */
-  .cert-nav{display:flex;align-items:center;gap:1.2rem;margin-top:1.4rem;}
-  .cert-arrow{width:42px;height:42px;border:1px solid var(--border);border-radius:2px;
-    background:transparent;color:var(--text);font-size:1.1rem;
-    display:flex;align-items:center;justify-content:center;
-    cursor:none;transition:background .2s,border-color .2s,color .2s;}
-  .cert-arrow:hover{background:var(--accent);border-color:var(--accent);color:#000;}
-  .cert-arrow:disabled{opacity:.25;pointer-events:none;}
-  .cert-dots{display:flex;gap:.5rem;flex:1;flex-wrap:wrap;}
-  .cert-dot{width:6px;height:6px;border-radius:50%;background:var(--border);
-    border:none;padding:0;cursor:none;transition:background .25s,transform .25s;}
-  .cert-dot.active{background:var(--accent);transform:scale(1.4);}
-  .cert-counter{font-family:var(--font-mono);font-size:.72rem;color:var(--muted);
-    letter-spacing:.1em;white-space:nowrap;margin-left:auto;}
 
   /* CONTACT */
   #contact{border-top:1px solid var(--border);}
@@ -282,10 +260,6 @@
   .reveal-stagger.visible>*:nth-child(3){transition-delay:.23s}
   .reveal-stagger.visible>*:nth-child(4){transition-delay:.32s}
   .reveal-stagger.visible>*{opacity:1;transform:none;}
-  /* Fallback: force visible after 1.2s in case observer never fires */
-  @keyframes forceShow{to{opacity:1;transform:none;}}
-  .reveal{animation:forceShow 0s 1.2s both;}
-  .reveal-stagger>*{animation:forceShow 0s 1.4s both;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
   /* RESPONSIVE */
@@ -335,7 +309,7 @@
   <div class="hero-inner">
     <div class="hero-text">
       <p class="hero-greeting" data-i18n="hero_greeting">👋 Hey, I'm</p>
-      <h1 class="hero-name">Your<br><em>Name</em></h1>
+      <h1 class="hero-name">Ashok<br>Kumar</em></h1>
       <p class="hero-tagline" data-i18n="hero_tagline">
         SMT Process Engineer · IPC Specialist · Based in Germany.
         Brief line about your focus and what you bring to the table.
@@ -347,9 +321,7 @@
     </div>
     <div class="hero-photo-wrap">
       <div class="hero-photo">
-        <!-- TO REPLACE: delete icon+label, add <img src="photo.jpg" alt="Your Name"> -->
-        <span class="hero-photo-icon">🧑‍💼</span>
-        <span class="hero-photo-label" data-i18n="photo_hint">Your Photo<br>Replace with image</span>
+        <img src="/home/anushka/fun/html/Pasted image.png" alt="Ashok">
         <div class="hero-photo-corner"></div>
       </div>
     </div>
@@ -468,89 +440,56 @@
 <!-- CERTIFICATES -->
 <section id="certificates">
   <span class="section-tag" data-i18n="cert_tag">Certifications</span>
-
-  <div class="cert-carousel-wrap reveal">
-    <div class="cert-track-outer" id="certTrackOuter">
-      <div class="cert-track" id="certTrack">
-
-        <!-- CERT 1 -->
-        <div class="cert-card active">
-          <div class="cert-icon">🏅</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert1_name">IPC-A-610 CIS</h3>
-            <p class="cert-issuer">IPC — Association Connecting Electronics Industries</p>
-            <p class="cert-date" data-i18n="cert1_date">Issued: Month Year · Expires: Month Year</p>
-          </div>
-        </div>
-
-        <!-- CERT 2 -->
-        <div class="cert-card">
-          <div class="cert-icon">📜</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert2_name">Certificate Name</h3>
-            <p class="cert-issuer" data-i18n="cert2_issuer">Issuing Organisation</p>
-            <p class="cert-date" data-i18n="cert2_date">Issued: Month Year</p>
-          </div>
-        </div>
-
-        <!-- CERT 3 -->
-        <div class="cert-card">
-          <div class="cert-icon">🎓</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert3_name">Degree / Qualification</h3>
-            <p class="cert-issuer" data-i18n="cert3_issuer">University / Institution Name</p>
-            <p class="cert-date" data-i18n="cert3_date">Graduated: Year</p>
-          </div>
-        </div>
-
-        <!-- CERT 4 -->
-        <div class="cert-card">
-          <div class="cert-icon">🔖</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert4_name">Another Certificate</h3>
-            <p class="cert-issuer" data-i18n="cert4_issuer">Issuing Organisation</p>
-            <p class="cert-date" data-i18n="cert4_date">Issued: Month Year</p>
-          </div>
-        </div>
-
-        <!-- CERT 5 -->
-        <div class="cert-card">
-          <div class="cert-icon">⚡</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert5_name">Certificate Name Five</h3>
-            <p class="cert-issuer" data-i18n="cert5_issuer">Issuing Organisation</p>
-            <p class="cert-date" data-i18n="cert5_date">Issued: Month Year</p>
-          </div>
-        </div>
-
-        <!-- CERT 6 -->
-        <div class="cert-card">
-          <div class="cert-icon">🛡️</div>
-          <div class="cert-info">
-            <h3 class="cert-name" data-i18n="cert6_name">Certificate Name Six</h3>
-            <p class="cert-issuer" data-i18n="cert6_issuer">Issuing Organisation</p>
-            <p class="cert-date" data-i18n="cert6_date">Issued: Month Year</p>
-          </div>
-        </div>
-
-        <!--
-          ── ADD MORE CERTS BELOW ──
-          Copy one block above, paste here, change icon + data-i18n keys.
-          Also add matching keys to the i18n object in the script (cert7_name etc.)
-        -->
-
-      </div><!-- /cert-track -->
-    </div><!-- /cert-track-outer -->
-
-    <!-- Controls -->
-    <div class="cert-nav">
-      <button class="cert-arrow" id="certPrev" aria-label="Previous">←</button>
-      <button class="cert-arrow" id="certNext" aria-label="Next">→</button>
-      <div class="cert-dots" id="certDots"></div>
-      <span class="cert-counter" id="certCounter"></span>
+  <div class="cert-grid reveal-stagger">
+    <div class="cert-card">
+      <div class="cert-icon">🏅</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert1_name">IPC-A-610 CIS</h3>
+        <p class="cert-issuer">IPC — Association Connecting Electronics Industries</p>
+        <p class="cert-date" data-i18n="cert1_date">Issued: Month Year · Expires: Month Year</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">📜</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert2_name">Certificate Name</h3>
+        <p class="cert-issuer" data-i18n="cert2_issuer">Issuing Organisation</p>
+        <p class="cert-date" data-i18n="cert2_date">Issued: Month Year</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🎓</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert3_name">Degree / Qualification</h3>
+        <p class="cert-issuer" data-i18n="cert3_issuer">University / Institution Name</p>
+        <p class="cert-date" data-i18n="cert3_date">Graduated: Year</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🔖</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert4_name">Another Certificate</h3>
+        <p class="cert-issuer" data-i18n="cert4_issuer">Issuing Organisation</p>
+        <p class="cert-date" data-i18n="cert4_date">Issued: Month Year</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚡</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert5_name">Certificate Name Five</h3>
+        <p class="cert-issuer" data-i18n="cert5_issuer">Issuing Organisation</p>
+        <p class="cert-date" data-i18n="cert5_date">Issued: Month Year</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🛡️</div>
+      <div class="cert-info">
+        <h3 class="cert-name" data-i18n="cert6_name">Certificate Name Six</h3>
+        <p class="cert-issuer" data-i18n="cert6_issuer">Issuing Organisation</p>
+        <p class="cert-date" data-i18n="cert6_date">Issued: Month Year</p>
+      </div>
     </div>
   </div>
-
 </section>
 
 <!-- CONTACT -->
@@ -803,128 +742,10 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 const navbar=document.getElementById('navbar');
 window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
 
-/* ============================================================
-   CERTIFICATE CAROUSEL
-============================================================ */
-(function(){
-  const track     = document.getElementById('certTrack');
-  const outer     = document.getElementById('certTrackOuter');
-  const prevBtn   = document.getElementById('certPrev');
-  const nextBtn   = document.getElementById('certNext');
-  const dotsWrap  = document.getElementById('certDots');
-  const counter   = document.getElementById('certCounter');
-  const cards     = Array.from(track.querySelectorAll('.cert-card'));
-  const total     = cards.length;
-  let current     = 0;
-  let cardW       = 0;
-  let visible     = 1;
-  let startX      = 0;
-  let isDragging  = false;
-
-  function getVisible(){
-    const w = outer.offsetWidth;
-    if(w >= 1020) return 3;
-    if(w >= 680)  return 2;
-    return 1;
-  }
-
-  function getCardW(){
-    return outer.offsetWidth / getVisible();
-  }
-
-  function setWidths(){
-    visible = getVisible();
-    cardW   = getCardW();
-    cards.forEach(c => c.style.minWidth = cardW + 'px');
-  }
-
-  function buildDots(){
-    dotsWrap.innerHTML = '';
-    const pages = total - visible + 1;
-    for(let i=0;i<pages;i++){
-      const d = document.createElement('button');
-      d.className = 'cert-dot' + (i===0?' active':'');
-      d.setAttribute('aria-label','Go to certificate '+(i+1));
-      d.addEventListener('click',()=>goTo(i));
-      dotsWrap.appendChild(d);
-    }
-  }
-
-  function updateUI(){
-    const pages = total - visible + 1;
-    const safeIdx = Math.min(current, pages-1);
-    // slide
-    track.style.transform = `translateX(-${safeIdx * cardW}px)`;
-    // active card highlight
-    cards.forEach((c,i) => c.classList.toggle('active', i===safeIdx));
-    // dots
-    dotsWrap.querySelectorAll('.cert-dot').forEach((d,i) => d.classList.toggle('active', i===safeIdx));
-    // arrows — stop at ends (no loop)
-    prevBtn.disabled = safeIdx === 0;
-    nextBtn.disabled = safeIdx >= pages-1;
-    // counter
-    counter.textContent = (safeIdx+1) + ' / ' + pages;
-  }
-
-  function goTo(idx){
-    const pages = total - visible + 1;
-    current = Math.max(0, Math.min(idx, pages-1));
-    updateUI();
-  }
-
-  prevBtn.addEventListener('click', () => goTo(current-1));
-  nextBtn.addEventListener('click', () => goTo(current+1));
-
-  // Keyboard
-  document.addEventListener('keydown', e => {
-    const sec = document.getElementById('certificates');
-    const rect = sec.getBoundingClientRect();
-    if(rect.top < window.innerHeight && rect.bottom > 0){
-      if(e.key==='ArrowRight') goTo(current+1);
-      if(e.key==='ArrowLeft')  goTo(current-1);
-    }
-  });
-
-  // Touch / mouse drag
-  track.addEventListener('mousedown',  e => { isDragging=true; startX=e.clientX; track.style.transition='none'; });
-  track.addEventListener('touchstart', e => { isDragging=true; startX=e.touches[0].clientX; track.style.transition='none'; }, {passive:true});
-  track.addEventListener('mousemove',  e => { if(!isDragging) return; track.style.transform=`translateX(${-current*cardW+(e.clientX-startX)}px)`; });
-  track.addEventListener('touchmove',  e => { if(!isDragging) return; track.style.transform=`translateX(${-current*cardW+(e.touches[0].clientX-startX)}px)`; }, {passive:true});
-  function endDrag(endX){
-    if(!isDragging) return;
-    isDragging=false;
-    track.style.transition='';
-    const diff = endX - startX;
-    if(diff < -50)       goTo(current+1);
-    else if(diff > 50)   goTo(current-1);
-    else                 updateUI();
-  }
-  track.addEventListener('mouseup',    e => endDrag(e.clientX));
-  track.addEventListener('mouseleave', e => endDrag(e.clientX));
-  track.addEventListener('touchend',   e => endDrag(e.changedTouches[0].clientX));
-
-  // Resize
-  window.addEventListener('resize', () => {
-    setWidths(); buildDots(); updateUI();
-  }, {passive:true});
-
-  // Init — defer until after paint so offsetWidth is correct
-  function init(){
-    setWidths(); buildDots(); updateUI();
-  }
-  if(document.readyState === 'complete'){
-    init();
-  } else {
-    window.addEventListener('load', init);
-  }
-  // Belt-and-suspenders: also run after a short delay in case of late reflow
-  setTimeout(init, 100);
-})();
-
 /* Scroll reveal */
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-},{threshold:0,rootMargin:'0px 0px -40px 0px'});
+},{threshold:0.1});
 document.querySelectorAll('.reveal,.reveal-stagger').forEach(el=>obs.observe(el));
 </script>
 </body>
