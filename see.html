@@ -168,7 +168,10 @@
   .what-card:hover .what-icon{color:var(--accent);}
   .what-icon{font-size:2rem;margin-bottom:1.2rem;transition:color .25s;display:block;}
   .what-title{font-family:var(--font-display);font-size:1.7rem;letter-spacing:.04em;margin-bottom:.8rem;}
-  .what-desc{font-size:.9rem;color:var(--muted);line-height:1.9;}
+  .what-desc{  font-size:1.05rem;   /* bigger */
+    font-weight:500;     /* medium bold */
+    color:var(--muted);
+    line-height:1.9;;}
   .what-card-num{position:absolute;top:1.4rem;right:1.8rem;font-family:var(--font-mono);font-size:.72rem;color:var(--border);}
 
   /* TAGS */
@@ -197,7 +200,13 @@
   .project-card:hover .project-thumb img{opacity:1;transform:scale(1.03);}
   .project-body{padding:1.5rem;flex:1;display:flex;flex-direction:column;gap:.6rem;}
   .project-name{font-family:var(--font-display);font-size:1.7rem;letter-spacing:.04em;line-height:1;}
-  .project-desc{font-size:.88rem;color:var(--muted);line-height:1.7;flex:1;}
+  .project-desc{
+    font-size:1.05rem;
+    font-weight:500;
+    color:var(--muted);
+    line-height:1.8;
+    flex:1;
+}
   .project-footer{display:flex;align-items:center;justify-content:space-between;
     padding:1rem 1.5rem;border-top:1px solid var(--border);}
   .project-links{display:flex;gap:1rem;}
@@ -431,6 +440,8 @@
       <div class="project-thumb">
         <span class="project-thumb-icon">⚡</span>
         <span class="project-thumb-label" data-i18n="img_hint">Project image</span>
+        <img src="assests/project_2.jpeg" alt="Project image">
+
       </div>
       <div class="project-body">
         <h3 class="project-name" data-i18n="proj1_name">BOM Cost Intelligence Platform</h3>
